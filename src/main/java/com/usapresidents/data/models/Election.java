@@ -11,20 +11,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "ELECTION")
 public class Election {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "election_year", nullable = false)
+    @Column(name = "ELECTION_YEAR", nullable = false)
     private Integer electionYear;
 
-    @Column(name = "candidate", nullable = false)
+    @Column(name = "CANDIDATE", nullable = false)
     private String candidate;
 
-    @Column(name = "votes", nullable = false)
+    @Column(name = "VOTES", nullable = false)
     private Integer votes;
 
-    @Column(name = "winner_loser_indic", nullable = false)
+    @Column(name = "WINNER_LOSER_INDIC", nullable = false, length = 1)
     private String winnerLoserIndic;
 }

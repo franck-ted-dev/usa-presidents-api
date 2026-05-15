@@ -8,17 +8,21 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "ADMINISTRATION")
 public class Administration {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    @Column(name = "ADMIN_NR", nullable = false)
+    private Long adminNumber;
 
-    @Column(name = "admin_number", nullable = false)
-    private Integer adminNumber;
+    // un president peut avoir plusieurs mandats = administrations
+    @ManyToOne
+    @JoinColumn(name = "PRESIDENT_ID", nullable = false)
+    private President president;
 
-    @Column(name = "pres_name", nullable = false)
-    private String presName;
+    @Column(name = "VICE_PRES_NAME", length = 50, nullable = false)
+    private String vicePresName;
 
-    @Column(name = "year_inaugurated", nullable = false)
+    @Column(name = "YEAR_INAUGURATED", nullable = false)
     private Integer yearInaugurated;
 }

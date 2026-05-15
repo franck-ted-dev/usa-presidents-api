@@ -11,26 +11,27 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "PRESIDENT")
 public class President {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "pres_name", length = 20, nullable = false)
+    @Column(name = "PRES_NAME", length = 50, nullable = false, unique = true)
     private String presName;
 
-    @Column(name = "birth_year", nullable = false)
+    @Column(name = "BIRTH_YEAR", nullable = false)
     private Integer birthYear;
 
-    @Column(name = "serv_year", nullable = false)
+    @Column(name = "SERV_YEAR", nullable = false)
     private Integer servYear;
 
-    @Column(name = "death_age", nullable = true)
+    @Column(name = "DEATH_AGE", nullable = true)
     private Integer deathAge;
 
-    @Column(name = "party", length = 15, nullable = false)
+    @Column(name = "PARTY", length = 30, nullable = false)
     private String party;
 
-    @Column(name = "state_born", length = 15, nullable = false)
+    @Column(name = "STATE_BORN", length = 30, nullable = false)
     private String stateBorn;
 }

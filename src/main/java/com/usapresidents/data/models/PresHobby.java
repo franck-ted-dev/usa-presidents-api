@@ -11,14 +11,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "PRES_HOBBY")
 public class PresHobby {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "pres_name", length = 20, nullable = false)
-    private String presName;
+    @ManyToOne // un president peut avoir plusieurs hobbies
+    @JoinColumn(name = "PRESIDENT_ID", nullable = false)
+    private President president;
 
-    @Column(name = "hobby", length = 100, nullable = false)
+    @Column(name = "HOBBY", length = 100, nullable = false)
     private String hobby;
 }
