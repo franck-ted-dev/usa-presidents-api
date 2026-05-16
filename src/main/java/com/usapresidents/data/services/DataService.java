@@ -1,6 +1,7 @@
 package com.usapresidents.data.services;
 
 import com.usapresidents.data.dtos.PartyAnalysisResponseDTO;
+import com.usapresidents.data.exceptions.ResourceNotFoundException;
 import com.usapresidents.data.mappers.DataMapper;
 import com.usapresidents.data.models.Administration;
 import com.usapresidents.data.models.Election;
@@ -25,6 +26,11 @@ public class DataService {
 
         // tous les presidents du parti "party" (objets complets)
         List<President> presidents = presidentRepository.findByParty(party);
+        // On vérifie si le party politique existe en base de donnees
+        if(presidents.isEmpty()){
+            // si absent, on lève l'exception
+            throw new ResourceNotFoundException("");
+        }
         List<String> presNames = presidents.stream() // noms de ces presidents
                 .map(President::getPresName)
                 .toList();

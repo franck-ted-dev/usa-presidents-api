@@ -12,8 +12,7 @@ import lombok.*;
 public class Administration {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ADMIN_NR", nullable = false)
-    private Long adminNumber;
+    private Long id;
 
     // un president peut avoir plusieurs mandats = administrations
     @ManyToOne
