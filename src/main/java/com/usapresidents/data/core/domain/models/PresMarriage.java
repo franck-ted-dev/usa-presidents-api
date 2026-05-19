@@ -1,11 +1,10 @@
-package com.usapresidents.data.models;
+package com.usapresidents.data.core.domain.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
 
 @Entity
 @AllArgsConstructor

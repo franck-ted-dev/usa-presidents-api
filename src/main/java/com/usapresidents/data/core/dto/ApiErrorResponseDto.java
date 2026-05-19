@@ -1,8 +1,8 @@
-package com.usapresidents.data.dtos;
+package com.usapresidents.data.core.dto;
 
 import java.time.LocalDateTime;
 
-public record ApiErrorResponseDTO(
+public record ApiErrorResponseDto(
         LocalDateTime timestamp,
         int httpStatus,
         String error,

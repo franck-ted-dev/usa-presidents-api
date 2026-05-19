@@ -1,6 +1,6 @@
-package com.usapresidents.data.repositories;
+package com.usapresidents.data.core.domain.repositories;
 
-import com.usapresidents.data.models.Election;
+import com.usapresidents.data.core.domain.models.Election;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;

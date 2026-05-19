@@ -1,7 +1,6 @@
-package com.usapresidents.data.controllers;
+package com.usapresidents.data.features.analytics;
 
-import com.usapresidents.data.dtos.PartyAnalysisResponseDTO;
-import com.usapresidents.data.services.DataService;
+import com.usapresidents.data.features.analytics.dto.PartyAnalysisResponseDTO;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/data")
 @RequiredArgsConstructor
 @Validated
-public class DataController {
-    private final DataService dataService;
+public class PartyAnalyticsController {
+    private final PartyAnalyticsService partyAnalyticsService;
 
     @GetMapping("/analysis/party")
     public ResponseEntity<PartyAnalysisResponseDTO> getPartyAnalysis(
             @RequestParam(name = "name") @NotBlank String party){
-        PartyAnalysisResponseDTO partyAnalysisResponseDTO = dataService.getPartyAnalysis(party);
+        PartyAnalysisResponseDTO partyAnalysisResponseDTO = partyAnalyticsService.getPartyAnalysis(party);
         return new ResponseEntity<>(partyAnalysisResponseDTO, HttpStatus.OK);
     }
 }

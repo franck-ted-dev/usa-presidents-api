@@ -1,4 +1,4 @@
-package com.usapresidents.data.dtos;
+package com.usapresidents.data.features.analytics.dto;
 
 import java.util.List;
 

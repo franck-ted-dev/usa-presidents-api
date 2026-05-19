@@ -1,14 +1,13 @@
-package com.usapresidents.data.services;
+package com.usapresidents.data.features.analytics;
 
-import com.usapresidents.data.dtos.PartyAnalysisResponseDTO;
-import com.usapresidents.data.exceptions.ResourceNotFoundException;
-import com.usapresidents.data.mappers.DataMapper;
-import com.usapresidents.data.models.Administration;
-import com.usapresidents.data.models.Election;
-import com.usapresidents.data.models.President;
-import com.usapresidents.data.repositories.AdministrationRepository;
-import com.usapresidents.data.repositories.ElectionRepository;
-import com.usapresidents.data.repositories.PresidentRepository;
+import com.usapresidents.data.features.analytics.dto.PartyAnalysisResponseDTO;
+import com.usapresidents.data.core.exception.ResourceNotFoundException;
+import com.usapresidents.data.core.domain.models.Administration;
+import com.usapresidents.data.core.domain.models.Election;
+import com.usapresidents.data.core.domain.models.President;
+import com.usapresidents.data.core.domain.repositories.AdministrationRepository;
+import com.usapresidents.data.core.domain.repositories.ElectionRepository;
+import com.usapresidents.data.core.domain.repositories.PresidentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +15,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DataService {
+public class PartyAnalyticsService {
     private final AdministrationRepository administrationRepository;
     private final PresidentRepository presidentRepository;
     private final ElectionRepository electionRepository;
-    private final DataMapper dataMapper;
+    private final PartyAnalyticsMapper partyAnalyticsMapper;
 
     public PartyAnalysisResponseDTO getPartyAnalysis(String party){
 
@@ -29,7 +28,7 @@ public class DataService {
         // On vérifie si le party politique existe en base de donnees
         if(presidents.isEmpty()){
             // si absent, on lève l'exception
-            throw new ResourceNotFoundException("");
+            throw new ResourceNotFoundException("No presidents found for the political party: " + party);
         }
         List<String> presNames = presidents.stream() // noms de ces presidents
                 .map(President::getPresName)
@@ -41,7 +40,7 @@ public class DataService {
         List<Administration> administrations = administrationRepository.findByPresidentIn(presidents);
         // transformations de ces admins en adminDTO
         List<PartyAnalysisResponseDTO.AdministrationInfoDTO> administrationInfoDTOS = administrations.stream()
-                .map(dataMapper::toAdministrationInfoDTO)
+                .map(partyAnalyticsMapper::toAdministrationInfoDTO)
                 .toList();
 
         char winnerLoserIndic = 'W';
@@ -50,7 +49,7 @@ public class DataService {
                 findByCandidateInAndWinnerLoserIndic(presNames, winnerLoserIndic);
         // toutes ces elections transformées en electionDTO
         List<PartyAnalysisResponseDTO.WinElectionInfoDTO> winElectionInfoDTOS = elections.stream()
-                .map(dataMapper::toWinElectionInfoDTO)
+                .map(partyAnalyticsMapper::toWinElectionInfoDTO)
                 .toList();
 
         // retourne l'objet responseDTO

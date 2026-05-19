@@ -1,4 +1,4 @@
-package com.usapresidents.data.models;
+package com.usapresidents.data.core.domain.models;
 
 import jakarta.persistence.*;
 import lombok.*;

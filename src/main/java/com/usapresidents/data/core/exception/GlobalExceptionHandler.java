@@ -1,6 +1,6 @@
-package com.usapresidents.data.exceptions;
+package com.usapresidents.data.core.exception;
 
-import com.usapresidents.data.dtos.ApiErrorResponseDTO;
+import com.usapresidents.data.core.dto.ApiErrorResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiErrorResponseDTO> handlePresidentNotFoundException(
+    public ResponseEntity<ApiErrorResponseDto> handlePresidentNotFoundException(
             ResourceNotFoundException ex,
             HttpServletRequest request
     ){
-        ApiErrorResponseDTO apiErrorResponseDTO = new ApiErrorResponseDTO(
+        ApiErrorResponseDto apiErrorResponseDTO = new ApiErrorResponseDto(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),  // code HTTP 404
                 HttpStatus.NOT_FOUND.getReasonPhrase(),
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HandlerMethodValidationException.class)
-    public ResponseEntity<ApiErrorResponseDTO> handleRequestParamValidationError(
+    public ResponseEntity<ApiErrorResponseDto> handleRequestParamValidationError(
             HandlerMethodValidationException ex,
             HttpServletRequest request
     ){
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
                 :ex.getValueResults().get(0).getResolvableErrors().get(0).getDefaultMessage();
 
 
-        ApiErrorResponseDTO apiErrorResponseDTO = new ApiErrorResponseDTO(
+        ApiErrorResponseDto apiErrorResponseDTO = new ApiErrorResponseDto(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(), // code HTTP 400
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
@@ -51,13 +51,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiErrorResponseDTO> handleRequestBodyValidationError(
+    public ResponseEntity<ApiErrorResponseDto> handleRequestBodyValidationError(
             MethodArgumentNotValidException ex,
             HttpServletRequest request
     ){
         String errorMessage = ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
 
-        ApiErrorResponseDTO apiErrorResponseDTO = new ApiErrorResponseDTO(
+        ApiErrorResponseDto apiErrorResponseDTO = new ApiErrorResponseDto(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(), // code HTTP 400
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),

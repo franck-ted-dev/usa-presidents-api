@@ -1,4 +1,4 @@
-package com.usapresidents.data.exceptions;
+package com.usapresidents.data.core.exception;
 
 public class ResourceNotFoundException extends RuntimeException{
     public ResourceNotFoundException(String message){
