@@ -347,3 +347,21 @@ INSERT INTO ADMINISTRATION (PRESIDENT_ID, VICE_PRES_NAME, YEAR_INAUGURATED) VALU
                   (44, 'Pence M R', 2017),
                   (45, 'Harris K', 2021),
                   (44, 'Vance J D', 2025);
+
+
+INSERT INTO PRES_HOBBY (PRESIDENT_ID, HOBBY) VALUES
+                  (43, 'Basketball'),
+                  (43, 'Baseball'),
+                  (43, 'Natation'),
+                  (43, 'Basketball'),
+                  (43, 'Basketball'),
+                  (43, 'Basketball'),
+                  (43, 'Basketball'),
+                  (43, 'Basketball'),
+                  (43, 'Basketball'),
+                  (43, 'Basketball'),
+                  (43, 'Basketball'),
+                  (43, 'Basketball'),
+                  (43, 'Basketball'),
+                  (43, 'Basketball'),
+                  (43, 'Basketball');

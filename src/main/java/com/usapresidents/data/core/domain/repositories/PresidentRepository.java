@@ -8,4 +8,7 @@ import java.util.List;
 public interface PresidentRepository extends JpaRepository<President,Long> {
     // on veut tous les presidents dont le party est celui-ci
     List<President> findByParty(String party);
+
+    // on veut le president s'appelant presName
+    President findByPresNameContainingIgnoreCase(String presName);
 }
