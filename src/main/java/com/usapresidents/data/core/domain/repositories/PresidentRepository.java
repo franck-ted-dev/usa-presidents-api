@@ -1,6 +1,8 @@
 package com.usapresidents.data.core.domain.repositories;
 
 import com.usapresidents.data.core.domain.models.President;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -11,4 +13,7 @@ public interface PresidentRepository extends JpaRepository<President,Long> {
 
     // on veut le president s'appelant presName
     President findByPresNameContainingIgnoreCase(String presName);
+
+    // on veut tous les presidents qui sont nes dans tel etat
+    Page<President> findByStateBorn(String state, Pageable pageable);
 }

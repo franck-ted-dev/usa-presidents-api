@@ -17,7 +17,7 @@ public class PresHobby {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne // un president peut avoir plusieurs hobbies
+    @ManyToOne // A President can have many hobbies
     @JoinColumn(name = "PRESIDENT_ID", nullable = false)
     private President president;
 

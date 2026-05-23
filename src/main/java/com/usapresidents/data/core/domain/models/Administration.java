@@ -14,7 +14,7 @@ public class Administration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // un president peut avoir plusieurs mandats = administrations
+    // A President can have many mandates = adminsistrations
     @ManyToOne
     @JoinColumn(name = "PRESIDENT_ID", nullable = false)
     private President president;
