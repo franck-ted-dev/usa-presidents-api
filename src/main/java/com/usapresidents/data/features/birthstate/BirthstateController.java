@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/presidents")
 @RequiredArgsConstructor
 @Validated
-public class birthstateController {
-    private final birthstateService birthstateService;
+public class BirthstateController {
+    private final BirthstateService birthstateService;
 
-    @GetMapping("/birthstate")
+    @GetMapping("/stateborn")
     public ResponseEntity<PagedResponseDto<PresidentDto>> getPresidentsfromState(
-            @RequestParam(name="name") @NotBlank(message = "le nom de l'etat ne peut pas etre vide") String state,
+            @RequestParam(name="name") @NotBlank(message = "le nom de l'etat ne peut pas etre vide") String stateBorn,
             @PageableDefault(page = 0, sort = "presName", size = 5) Pageable pageable){
-        PagedResponseDto<PresidentDto> responseDto = birthstateService.getPresidentsfromState(state, pageable);
+        PagedResponseDto<PresidentDto> responseDto = birthstateService.getPresidentsfromState(stateBorn, pageable);
         return ResponseEntity.ok(responseDto);
     }
 }

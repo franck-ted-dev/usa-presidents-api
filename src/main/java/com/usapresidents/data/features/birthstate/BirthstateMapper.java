@@ -5,7 +5,7 @@ import com.usapresidents.data.features.birthstate.dto.PresidentDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class birthstateMapper {
+public class BirthstateMapper {
     public PresidentDto toPresidentDto(President president){
         return new PresidentDto(
                 president.getPresName(),

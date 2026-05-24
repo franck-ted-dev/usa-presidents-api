@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class birthstateService {
+public class BirthstateService {
     private final PresidentRepository presidentRepository;
-    private final birthstateMapper birthstateMapper;
+    private final BirthstateMapper birthstateMapper;
 
-    public PagedResponseDto<PresidentDto> getPresidentsfromState(String state, Pageable pageable){
-        Page<President> presidents = presidentRepository.findByStateBorn(state, pageable);
+    public PagedResponseDto<PresidentDto> getPresidentsfromState(String stateBorn, Pageable pageable){
+        Page<President> presidents = presidentRepository.findByStateBorn(stateBorn, pageable);
 
         // si la page est vide, le state correspondant n'a pas de president
         if(presidents.isEmpty()){

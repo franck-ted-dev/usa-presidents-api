@@ -15,5 +15,5 @@ public interface PresidentRepository extends JpaRepository<President,Long> {
     President findByPresNameContainingIgnoreCase(String presName);
 
     // on veut tous les presidents qui sont nes dans tel etat
-    Page<President> findByStateBorn(String state, Pageable pageable);
+    Page<President> findByStateBorn(String stateBorn, Pageable pageable);
 }
