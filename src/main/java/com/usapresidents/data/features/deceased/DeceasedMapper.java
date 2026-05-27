@@ -1,6 +1,7 @@
 package com.usapresidents.data.features.deceased;
 
 import com.usapresidents.data.core.domain.models.President;
+import com.usapresidents.data.features.deceased.dto.PresidentDeathDto;
 import org.springframework.stereotype.Component;
 
 @Component

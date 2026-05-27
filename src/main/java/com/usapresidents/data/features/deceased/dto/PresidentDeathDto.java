@@ -1,4 +1,4 @@
-package com.usapresidents.data.features.deceased;
+package com.usapresidents.data.features.deceased.dto;
 
 public record PresidentDeathDto(
         Long id,
