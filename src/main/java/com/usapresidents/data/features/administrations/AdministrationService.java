@@ -28,7 +28,7 @@ public class AdministrationService {
     private final PresidentRepository presidentRepository;
 
     // on utilise notre propre classe Page<T>
-    public PagedResponseDto<AdministrationResponseDto> getAdministrations(long presidentId, Pageable pageable){
+    public PagedResponseDto<AdministrationResponseDto> getAdministrations(Long presidentId, Pageable pageable){
 
         // On vérifie si un president correspond à cet Id
         if(!presidentRepository.existsById(presidentId)){

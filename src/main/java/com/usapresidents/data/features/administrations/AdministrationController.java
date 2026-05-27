@@ -2,7 +2,6 @@ package com.usapresidents.data.features.administrations;
 
 import com.usapresidents.data.core.dto.PagedResponseDto;
 import com.usapresidents.data.features.administrations.dto.AdministrationResponseDto;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +23,8 @@ public class AdministrationController {
 
     @GetMapping("/{id}/administrations")
     public ResponseEntity<PagedResponseDto<AdministrationResponseDto>> getAdministrations(
-            @PathVariable @Positive(message = "L'id du president ne peut pas etre vide") long id,
-            @PageableDefault(size = 10, sort = "hobby", direction = Sort.Direction.ASC) Pageable pageable
+            @PathVariable @Positive(message = "L'id du president ne peut pas etre vide") Long id,
+            @PageableDefault(page = 0, size = 10, sort = "yearInaugurated", direction = Sort.Direction.ASC) Pageable pageable
             ){
         PagedResponseDto<AdministrationResponseDto> administrations = administrationService.getAdministrations(id, pageable);
         return ResponseEntity.ok(administrations);

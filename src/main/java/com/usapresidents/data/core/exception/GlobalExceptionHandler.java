@@ -4,12 +4,14 @@ import com.usapresidents.data.core.dto.ApiErrorResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -29,42 +31,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiErrorResponseDTO, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(HandlerMethodValidationException.class)
-    public ResponseEntity<ApiErrorResponseDto> handleRequestParamValidationError(
-            HandlerMethodValidationException ex,
-            HttpServletRequest request
-    ){
-        String errorMessage = ex.getValueResults().isEmpty()
-                ?"Validation error on URL parameters"
-                :ex.getValueResults().get(0).getResolvableErrors().get(0).getDefaultMessage();
-
-
-        ApiErrorResponseDto apiErrorResponseDTO = new ApiErrorResponseDto(
+    @ExceptionHandler(Exception.class) // Fängt einfach ALLES ab
+    public ResponseEntity<ApiErrorResponseDto> handleAllErrors(Exception ex, HttpServletRequest request) {
+        ApiErrorResponseDto error = new ApiErrorResponseDto(
                 LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(), // code HTTP 400
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                errorMessage,
+                500,
+                "Internal Server Error",
+                "An unexpected error occurred. Please try again later.",
                 request.getRequestURI()
         );
-
-        return new ResponseEntity<>(apiErrorResponseDTO, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiErrorResponseDto> handleRequestBodyValidationError(
-            MethodArgumentNotValidException ex,
-            HttpServletRequest request
-    ){
-        String errorMessage = ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
-
-        ApiErrorResponseDto apiErrorResponseDTO = new ApiErrorResponseDto(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(), // code HTTP 400
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                errorMessage,
-                request.getRequestURI()
-        );
-
-        return new ResponseEntity<>(apiErrorResponseDTO, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(500).body(error);
     }
 }

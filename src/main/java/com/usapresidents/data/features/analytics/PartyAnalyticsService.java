@@ -25,11 +25,7 @@ public class PartyAnalyticsService {
 
         // tous les presidents du parti "party" (objets complets)
         List<President> presidents = presidentRepository.findByParty(party);
-        // On vérifie si le party politique existe en base de donnees
-        if(presidents.isEmpty()){
-            // si absent, on lève l'exception
-            throw new ResourceNotFoundException("No presidents found for the political party: " + party);
-        }
+
         List<String> presNames = presidents.stream() // noms de ces presidents
                 .map(President::getPresName)
                 .toList();

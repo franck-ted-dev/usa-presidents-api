@@ -16,4 +16,8 @@ public interface PresidentRepository extends JpaRepository<President,Long> {
 
     // on veut tous les presidents qui sont nes dans tel etat
     Page<President> findByStateBorn(String stateBorn, Pageable pageable);
+
+    boolean existsById(Long Id);
+
+    Page<President> findByDeathAgeIsNotNull(Pageable pageable);
 }

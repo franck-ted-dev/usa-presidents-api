@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/data")
+@RequestMapping("/api/analysis")
 @RequiredArgsConstructor
 @Validated
 public class PartyAnalyticsController {
     private final PartyAnalyticsService partyAnalyticsService;
 
-    @GetMapping("/analysis/party")
+    @GetMapping("/party")
     public ResponseEntity<PartyAnalysisResponseDTO> getPartyAnalysis(
-            @RequestParam(name = "name") @NotBlank String party){
+            @RequestParam(name = "name") @NotBlank(message = "Le nom du parti ne peut pas etre nul.") String party){
         PartyAnalysisResponseDTO partyAnalysisResponseDTO = partyAnalyticsService.getPartyAnalysis(party);
         return new ResponseEntity<>(partyAnalysisResponseDTO, HttpStatus.OK);
     }
