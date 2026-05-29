@@ -1,11 +1,8 @@
 package com.usapresidents.data.features.administrations.dto;
 
 /*
-Pour chaque administration, afficher :
-l'id du president,
-son nom,
-le nom de son vice president
-et l'année de prise de fonction de cette administration
+ * Transports a summary of a president's administration period,
+ * including the associated president's metadata and the vice president.
  */
 public record AdministrationResponseDto(
     Long id,

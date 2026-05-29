@@ -11,21 +11,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DeceasedService {
     private final PresidentRepository presidentRepository;
     private final DeceasedMapper deceasedMapper;
 
-    public PagedResponseDto<PresidentDeathDto> getPresidentDeath(){
-        // Wir erstellen unseres eigenes Objekt Sort und Pageable
-        Sort kriterium = Sort.by("deathAge").descending();
-        Pageable pageable = PageRequest.of(0,10, kriterium);
+    public List<PresidentDeathDto> getTopTenOldestDeceasedPresidents(){
 
-        // das Repository liefert uns alle verstorbenen Presidents
-        // und dann umwandeln
-        Page<President> presidents = presidentRepository.findByDeathAgeIsNotNull(pageable);
-        Page<PresidentDeathDto> presidentDeathDtos = presidents.map(deceasedMapper::toPresidentDeathDto);
-        return new PagedResponseDto<>(presidentDeathDtos);
+        Sort sort = Sort.by("deathAge").descending();
+        Pageable pageable = PageRequest.of(0,10, sort);
+
+        List<President> presidents = presidentRepository.findByDeathAgeIsNotNull(pageable).getContent();
+        return presidents.stream()
+                .map(deceasedMapper::toPresidentDeathDto)
+                .toList();
     }
 }

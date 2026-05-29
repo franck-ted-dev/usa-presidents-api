@@ -5,5 +5,5 @@ public record ElectionDto(
         Integer electionYear,
         String candidate,
         Integer votes,
-        char winnerLoserIndic
+        Character winnerLoserIndic
 ) {}

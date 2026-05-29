@@ -22,8 +22,8 @@ public class BirthstateController {
 
     @GetMapping("/stateborn")
     public ResponseEntity<PagedResponseDto<PresidentDto>> getPresidentsfromState(
-            @RequestParam(name="name") @NotBlank(message = "le nom de l'etat ne peut pas etre vide") String stateBorn,
-            @PageableDefault(page = 0, sort = "presName", size = 5) Pageable pageable){
+            @RequestParam(name="name") @NotBlank(message = "State name cannot be blank") String stateBorn,
+            @PageableDefault(sort = "presName", size = 5) Pageable pageable){
         PagedResponseDto<PresidentDto> responseDto = birthstateService.getPresidentsfromState(stateBorn, pageable);
         return ResponseEntity.ok(responseDto);
     }

@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     ){
         ApiErrorResponseDto apiErrorResponseDTO = new ApiErrorResponseDto(
                 LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),  // code HTTP 404
+                HttpStatus.NOT_FOUND.value(),
                 HttpStatus.NOT_FOUND.getReasonPhrase(),
                 ex.getMessage(),
                 request.getRequestURI()
@@ -31,15 +31,32 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiErrorResponseDTO, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(Exception.class) // Fängt einfach ALLES ab
+    // Handles both types of parameter validation exceptions to return a clean 400 Bad Request
+    @ExceptionHandler({
+            org.springframework.web.method.annotation.HandlerMethodValidationException.class,
+            jakarta.validation.ConstraintViolationException.class
+    })
+    public ResponseEntity<ApiErrorResponseDto> handleValidationErrors(Exception ex, HttpServletRequest request) {
+        ApiErrorResponseDto error = new ApiErrorResponseDto(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                "Validation failed: One or more parameters are invalid.",
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiErrorResponseDto> handleAllErrors(Exception ex, HttpServletRequest request) {
         ApiErrorResponseDto error = new ApiErrorResponseDto(
                 LocalDateTime.now(),
-                500,
-                "Internal Server Error",
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
                 "An unexpected error occurred. Please try again later.",
                 request.getRequestURI()
         );
         return ResponseEntity.status(500).body(error);
     }
+
 }

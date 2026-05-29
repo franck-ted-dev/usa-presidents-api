@@ -1,7 +1,7 @@
 package com.usapresidents.data.features.analytics;
 
+import com.usapresidents.data.core.exception.PartyNotFoundException;
 import com.usapresidents.data.features.analytics.dto.PartyAnalysisResponseDTO;
-import com.usapresidents.data.core.exception.ResourceNotFoundException;
 import com.usapresidents.data.core.domain.models.Administration;
 import com.usapresidents.data.core.domain.models.Election;
 import com.usapresidents.data.core.domain.models.President;
@@ -23,32 +23,35 @@ public class PartyAnalyticsService {
 
     public PartyAnalysisResponseDTO getPartyAnalysis(String party){
 
-        // tous les presidents du parti "party" (objets complets)
+
         List<President> presidents = presidentRepository.findByParty(party);
 
-        List<String> presNames = presidents.stream() // noms de ces presidents
+        if (presidents.isEmpty()) {
+            throw new PartyNotFoundException(party);
+        }
+
+        List<String> presNames = presidents.stream()
                 .map(President::getPresName)
                 .toList();
 
-        int totalPresident = presidents.size(); // element de PartyAnalysisResponseDTO
+        int totalPresident = presidents.size();
 
-        // toutes les administrations de ces presidents
+
         List<Administration> administrations = administrationRepository.findByPresidentIn(presidents);
-        // transformations de ces admins en adminDTO
+
         List<PartyAnalysisResponseDTO.AdministrationInfoDTO> administrationInfoDTOS = administrations.stream()
                 .map(partyAnalyticsMapper::toAdministrationInfoDTO)
                 .toList();
 
-        char winnerLoserIndic = 'W';
-        // toutes les elections gagnées par ces presidents
+        Character winnerLoserIndic = 'W';
+
         List<Election> elections = electionRepository.
                 findByCandidateInAndWinnerLoserIndic(presNames, winnerLoserIndic);
-        // toutes ces elections transformées en electionDTO
+
         List<PartyAnalysisResponseDTO.WinElectionInfoDTO> winElectionInfoDTOS = elections.stream()
                 .map(partyAnalyticsMapper::toWinElectionInfoDTO)
                 .toList();
 
-        // retourne l'objet responseDTO
         return new PartyAnalysisResponseDTO(
                 party,
                 totalPresident,

@@ -27,5 +27,5 @@ public class Election {
     private Integer votes;
 
     @Column(name = "WINNER_LOSER_INDIC", nullable = false, length = 1)
-    private char winnerLoserIndic;
+    private Character winnerLoserIndic;
 }

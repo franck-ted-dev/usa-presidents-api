@@ -22,21 +22,17 @@ public class SearchService {
     public SlicedResponseDto<PresidentDto> searchPresidentDynamic(
             PresidentSearchRequest request
     ){
-        Sort kriterium = Sort.by("birthYear").descending()
+        Sort sort = Sort.by("birthYear").descending()
                 .and(Sort.by("deathAge").ascending());
-        Pageable pageable = (Pageable) PageRequest.of(0, 3);
+        Pageable pageable = PageRequest.of(0, 3, sort);
 
-        // das Objekt des Typs specification
-        // startet ohne Bedingung (holt standardmäßig alles)
         Specification<President> specification = (root, query, criteriaBuilder)
                 -> criteriaBuilder.conjunction();
 
-        // Muss nach der Party gesucht werden?
         if(request.party() != null && !request.party().isBlank()){
             specification = specification.and(PresidentSpecifications.hasParty(request.party()));
         }
 
-        // Muss nach der StateBorn gesucht werden?
         if(request.stateBorn() != null && !request.stateBorn().isBlank()){
             specification = specification.and(PresidentSpecifications.bornInState(request.stateBorn()));
         }
@@ -46,7 +42,7 @@ public class SearchService {
         }
 
         if(request.birthYearMin() != null){
-            specification = specification.and(PresidentSpecifications.birthYearGreatherThanOrEqual(request.birthYearMin()));
+            specification = specification.and(PresidentSpecifications.birthYearGreaterThanOrEqual(request.birthYearMin()));
         }
 
         Slice<President> presidents = presidentRepository.findAll(specification, pageable);

@@ -8,16 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/presidents")
 @RequiredArgsConstructor
 public class DeceasedController {
     private final DeceasedService deceasedService;
 
-    @GetMapping("/death")
-    public ResponseEntity<PagedResponseDto<PresidentDeathDto>> getPresidentDeath(){
+    @GetMapping("/top-oldest")
+    public ResponseEntity<List<PresidentDeathDto>> getTopTenOldestDeceasedPresidents(){
 
-        PagedResponseDto<PresidentDeathDto> pagedResponseDto = deceasedService.getPresidentDeath();
-        return ResponseEntity.ok(pagedResponseDto);
+        List<PresidentDeathDto> topTen = deceasedService.getTopTenOldestDeceasedPresidents();
+        return ResponseEntity.ok(topTen);
     }
 }

@@ -23,7 +23,7 @@ public class AdministrationController {
 
     @GetMapping("/{id}/administrations")
     public ResponseEntity<PagedResponseDto<AdministrationResponseDto>> getAdministrations(
-            @PathVariable @Positive(message = "L'id du president ne peut pas etre vide") Long id,
+            @PathVariable @Positive(message = "President ID must be a positive number") Long id,
             @PageableDefault(page = 0, size = 10, sort = "yearInaugurated", direction = Sort.Direction.ASC) Pageable pageable
             ){
         PagedResponseDto<AdministrationResponseDto> administrations = administrationService.getAdministrations(id, pageable);

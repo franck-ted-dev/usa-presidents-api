@@ -5,7 +5,7 @@ import com.usapresidents.data.features.hobbies.dto.HobbyResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HobbyMapper {
+public class PresidentHobbiesMapper {
     public HobbyResponseDto toHobbyResponseDto(PresHobby presHobby){
         return new HobbyResponseDto(
                 presHobby.getId(),

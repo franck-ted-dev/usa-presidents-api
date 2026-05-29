@@ -20,7 +20,7 @@ public class PartyAnalyticsController {
 
     @GetMapping("/party")
     public ResponseEntity<PartyAnalysisResponseDTO> getPartyAnalysis(
-            @RequestParam(name = "name") @NotBlank(message = "Le nom du parti ne peut pas etre nul.") String party){
+            @RequestParam(name = "name") @NotBlank(message = "Party name cannot be blank") String party){
         PartyAnalysisResponseDTO partyAnalysisResponseDTO = partyAnalyticsService.getPartyAnalysis(party);
         return new ResponseEntity<>(partyAnalysisResponseDTO, HttpStatus.OK);
     }

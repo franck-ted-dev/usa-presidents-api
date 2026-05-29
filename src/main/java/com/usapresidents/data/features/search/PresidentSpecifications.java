@@ -15,7 +15,7 @@ public class PresidentSpecifications {
                 -> criteriaBuilder.equal(root.get("stateBorn"), stateBorn);
     }
 
-    public static Specification<President> birthYearGreatherThanOrEqual(Integer birthYearMin){
+    public static Specification<President> birthYearGreaterThanOrEqual(Integer birthYearMin){
         return (root, query, criteriaBuilder)
                 -> criteriaBuilder.greaterThanOrEqualTo(root.get("birthYear"), birthYearMin);
     }

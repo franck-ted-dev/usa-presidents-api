@@ -19,9 +19,9 @@ public class ElectionService {
     private final ElectionMapper electionMapper;
 
     public SlicedResponseDto<ElectionDto> getElections(){
-        Pageable kriterium = PageRequest.of(0, 20, Sort.Direction.ASC, "electionYear");
+        Pageable pageable = PageRequest.of(0, 20, Sort.Direction.ASC, "electionYear");
 
-        Slice<Election> elections = electionRepository.findAll(kriterium);
+        Slice<Election> elections = electionRepository.findBy(pageable);
         Slice<ElectionDto> electionDtos = elections.map(electionMapper::toElectionDto);
         return new SlicedResponseDto<>(electionDtos);
     }

@@ -17,7 +17,7 @@ public class PresMarriage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne  // A president can have many spouses
+    @ManyToOne
     @JoinColumn(name = "PRESIDENT_ID", nullable = false)
     private President president;
 

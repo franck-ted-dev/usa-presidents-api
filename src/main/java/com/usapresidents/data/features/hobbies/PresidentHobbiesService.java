@@ -14,18 +14,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class HobbyService {
+public class PresidentHobbiesService {
     private final PresHobbyRepository presHobbyRepository;
     private final PresidentRepository presidentRepository;
-    private final HobbyMapper hobbyMapper;
+    private final PresidentHobbiesMapper hobbyMapper;
 
     public PagedResponseDto<HobbyResponseDto> getHobbies(String presName, Pageable pageable){
-        President president = presidentRepository.findByPresNameContainingIgnoreCase(presName);
+        President president = presidentRepository.findByPresNameIgnoreCase(presName);
         if(president == null){
             throw new ResourceNotFoundException(presName + " is not a name of President.");
         }
 
-        // Page<Hobby> de ce president
         Page<PresHobby> hobbies = presHobbyRepository.findByPresident(president, pageable);
         Page<HobbyResponseDto> hobbiesDto = hobbies.map(hobbyMapper::toHobbyResponseDto);
         return new PagedResponseDto<>(hobbiesDto);
