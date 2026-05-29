@@ -30,7 +30,7 @@ public class PresMarriage {
     @Column(name = "SPOUSE_AGE", nullable = false)
     private Integer spouseAge;
 
-    @Column(name = "NUMBER_CHILDREN", nullable = false)
+    @Column(name = "NR_CHILDREN", nullable = false)
     private Integer numberChildren;
 
     @Column(name = "MARRIAGE_YEAR", nullable = false)

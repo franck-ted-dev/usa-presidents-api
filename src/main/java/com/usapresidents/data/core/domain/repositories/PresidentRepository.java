@@ -27,4 +27,15 @@ public interface PresidentRepository extends JpaRepository<President,Long>, JpaS
     // Custom JPQL query to fetch all presidents associated with a specific hobby
     @Query("SELECT p FROM PresHobby h JOIN h.president p WHERE h.hobby = :parameter")
     Slice<President> findByHobby(@Param ("parameter") String hobby, Pageable pageable);
+
+    // Custom JPQL query that ranks presidents by children count without risking GROUP BY pagination bugs
+    @Query("SELECT p " +
+            "FROM PresMarriage m " +
+            "JOIN m.president p " +
+            "GROUP BY p " +
+            "ORDER BY SUM(m.numberChildren) DESC")
+    Slice<President> findPresidentsRankedByChildren(Pageable pageable);
+
+    @Query("SELECT SUM(m.numberChildren) FROM PresMarriage m WHERE m.president = :president")
+    Integer countChildrenByPresident(@Param("president") President president);
 }
