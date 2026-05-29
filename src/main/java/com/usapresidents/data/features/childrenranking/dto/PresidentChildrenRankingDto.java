@@ -4,5 +4,5 @@ public record PresidentChildrenRankingDto(
         String presName,
         String party,
         String stateBorn,
-        int totalChildren // Wird im Service berechnet
+        int totalChildren
 ) { }

@@ -15,14 +15,12 @@ public class PresidentRankingService {
     private final PresidentRepository presidentRepository;
 
     public SlicedResponseDto<PresidentChildrenRankingDto> getPresidentsRankingByChildren(Pageable pageable) {
-        // 1. Holt die nach Kindern sortierten Präsidenten als stabiles Slice
+
         Slice<President> presidentSlice = presidentRepository.findPresidentsRankedByChildren(pageable);
 
-        // 2. Errechnet für jeden Präsidenten die Summe und mappt sie ins Record-DTO
         Slice<PresidentChildrenRankingDto> rankingSlice = presidentSlice.map(president -> {
             Integer totalChildren = presidentRepository.countChildrenByPresident(president);
 
-            // Falls ein Präsident im System erfasst ist, aber totalChildren null liefert, setzen wir 0
             int childrenCount = (totalChildren != null) ? totalChildren : 0;
 
             return new PresidentChildrenRankingDto(
@@ -33,7 +31,6 @@ public class PresidentRankingService {
             );
         });
 
-        // 3. Gibt das fertige SlicedResponseDto zurück
         return new SlicedResponseDto<>(rankingSlice);
     }
 }

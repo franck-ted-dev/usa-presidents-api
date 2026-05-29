@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ElectionRepository extends JpaRepository<Election, Long> {
 
-    List<Election> findByCandidateInAndWinnerLoserIndic(Collection<String> candidates, char winnerLoserIndic);
+    List<Election> findByCandidateInAndWinnerLoserIndic(Collection<String> candidates, Character winnerLoserIndic);
 
     Slice<Election> findBy(Pageable pageable);
 }

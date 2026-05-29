@@ -23,7 +23,6 @@ public class PartyAnalyticsService {
 
     public PartyAnalysisResponseDTO getPartyAnalysis(String party){
 
-
         List<President> presidents = presidentRepository.findByParty(party);
 
         if (presidents.isEmpty()) {
