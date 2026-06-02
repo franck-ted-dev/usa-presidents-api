@@ -2,10 +2,8 @@ package com.usapresidents.data.features.deceased;
 
 import com.usapresidents.data.core.domain.models.President;
 import com.usapresidents.data.core.domain.repositories.PresidentRepository;
-import com.usapresidents.data.core.dto.PagedResponseDto;
 import com.usapresidents.data.features.deceased.dto.PresidentDeathDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

@@ -1,0 +1,35 @@
+services:
+  api:
+    build: .
+    image: franck-dev/usapresidents-api:v1.0
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: usapresidents
+      DB_USER: postgres
+      DB_PASSWORD: mein_sicheres_passwort
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    container_name: db_usapresidents
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      POSTGRES_DB: usapresidents
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mein_sicheres_passwort
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d usapresidents"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

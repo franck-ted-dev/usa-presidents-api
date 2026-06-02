@@ -12,7 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/presidents")
+@RequestMapping("/api/presidents")
 @RequiredArgsConstructor
 @Validated
 public class PresidentHobbiesController {

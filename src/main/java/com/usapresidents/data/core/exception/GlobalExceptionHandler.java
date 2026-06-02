@@ -4,14 +4,11 @@ import com.usapresidents.data.core.dto.ApiErrorResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -34,7 +31,8 @@ public class GlobalExceptionHandler {
     // Handles both types of parameter validation exceptions to return a clean 400 Bad Request
     @ExceptionHandler({
             org.springframework.web.method.annotation.HandlerMethodValidationException.class,
-            jakarta.validation.ConstraintViolationException.class
+            jakarta.validation.ConstraintViolationException.class,
+            MethodArgumentNotValidException.class
     })
     public ResponseEntity<ApiErrorResponseDto> handleValidationErrors(Exception ex, HttpServletRequest request) {
         ApiErrorResponseDto error = new ApiErrorResponseDto(
@@ -56,7 +54,7 @@ public class GlobalExceptionHandler {
                 "An unexpected error occurred. Please try again later.",
                 request.getRequestURI()
         );
-        return ResponseEntity.status(500).body(error);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
 }

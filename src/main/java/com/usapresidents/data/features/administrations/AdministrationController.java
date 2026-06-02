@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/presidents")
+@RequestMapping("/api/presidents")
 @RequiredArgsConstructor
 @Validated
 public class AdministrationController {

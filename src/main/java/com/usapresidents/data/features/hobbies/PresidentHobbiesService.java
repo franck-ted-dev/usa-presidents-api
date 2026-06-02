@@ -5,7 +5,7 @@ import com.usapresidents.data.core.domain.models.President;
 import com.usapresidents.data.core.domain.repositories.PresHobbyRepository;
 import com.usapresidents.data.core.domain.repositories.PresidentRepository;
 import com.usapresidents.data.core.dto.PagedResponseDto;
-import com.usapresidents.data.core.exception.ResourceNotFoundException;
+import com.usapresidents.data.core.exception.PresidentNotFoundException;
 import com.usapresidents.data.features.hobbies.dto.HobbyResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ public class PresidentHobbiesService {
     public PagedResponseDto<HobbyResponseDto> getHobbies(String presName, Pageable pageable){
         President president = presidentRepository.findByPresNameIgnoreCase(presName);
         if(president == null){
-            throw new ResourceNotFoundException(presName + " is not a name of President.");
+            throw new PresidentNotFoundException(presName);
         }
 
         Page<PresHobby> hobbies = presHobbyRepository.findByPresident(president, pageable);
